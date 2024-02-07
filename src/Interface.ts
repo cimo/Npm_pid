@@ -1,3 +1,10 @@
+export interface Iparameter {
+    tag: string;
+    data: string;
+    timeLimit: number;
+    timeCreated: number;
+}
+
 export interface IcallbackAction {
-    (index: number): void;
+    (isExists: boolean, pidKey: number);
 }

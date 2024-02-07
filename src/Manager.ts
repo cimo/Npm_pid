@@ -2,61 +2,77 @@
 import * as Interface from "./Interface";
 
 export default class Pid {
-    private timeLimit: number;
-    private list: Map<number, { tag: string; timeCreated: number }>;
+    private mainList: Map<number, Interface.Iparameter>;
+    private timeCheck: number;
 
-    constructor(timeLimit: number) {
-        this.timeLimit = timeLimit * 60 * 1000;
-        this.list = new Map();
+    getMainList = () => {
+        return this.mainList;
+    };
+
+    constructor(timeCheck = 25000) {
+        this.mainList = new Map();
+        this.timeCheck = timeCheck;
 
         this.checkInterval();
     }
 
-    add = (tag: string, callback: Interface.IcallbackAction) => {
-        const checkResult = this.check(tag);
+    add = (tag: string, data: string, timeLimit: number, callback: Interface.IcallbackAction) => {
+        const checkExists = this.checkExists(tag);
+        let key = -1;
 
-        if (checkResult === 0) {
-            const index = this.list.size + 1;
+        if (!checkExists) {
+            key = this.mainList.size + 1;
 
-            this.list.set(index, { tag, timeCreated: Date.now() });
-
-            callback(index);
-
-            return;
+            this.mainList.set(key, { tag, data, timeLimit, timeCreated: Date.now() });
         }
 
-        callback(0);
-
-        return;
+        callback(checkExists, key);
     };
 
-    check = (tagValue: string) => {
-        for (const [id, { tag }] of this.list) {
+    update = (key: number, data: string) => {
+        if (this.mainList.has(key)) {
+            const oldParameter = this.mainList.get(key);
+
+            if (oldParameter) {
+                this.mainList.set(key, {
+                    tag: oldParameter.tag,
+                    data,
+                    timeLimit: oldParameter.timeLimit,
+                    timeCreated: oldParameter.timeCreated
+                });
+            }
+        }
+    };
+
+    checkExists = (tagValue: string) => {
+        for (const [, { tag }] of this.mainList) {
             if (tag === tagValue) {
-                return id;
+                return true;
             }
         }
 
-        return 0;
+        return false;
     };
 
-    remove = (id: number) => {
-        this.list.delete(id);
+    remove = (key: number) => {
+        if (this.mainList.has(key)) {
+            this.mainList.delete(key);
+        }
     };
 
     private checkInterval = () => {
         setInterval(() => {
             const now = Date.now();
 
-            for (const [id, { timeCreated }] of this.list) {
+            for (const [key, { timeCreated, timeLimit }] of this.mainList) {
                 const difference = now - timeCreated;
 
-                if (difference > this.timeLimit) {
-                    this.remove(id);
+                if (difference > timeLimit && timeLimit > 0) {
+                    this.remove(key);
 
                     break;
                 }
             }
-        }, 60000);
+        }, this.timeCheck);
     };
 }
