@@ -19,16 +19,16 @@ PID management. Light, fast and secure.
 ```
 ...
 
-import { Pid } from "@cimo/pid";
+import { Cp } from "@cimo/pid";
 
 // Source
 import * as ControllerTest from "../controller/Test";
 
 ...
 
-const pid = new Pid(5); // Time limit in minutes.
+const cp = new Cp();
 
-ControllerTest.execute(pid);
+ControllerTest.execute(cp);
 
 ...
 ```
@@ -38,14 +38,18 @@ ControllerTest.execute(pid);
 ```
 ...
 
-import { Pid } from "@cimo/pid";
+import { Cp } from "@cimo/cp";
 
 ...
 
-export const execute = (pid: Pid) => {
-    pid.add("api", (pidIndex) => {
-        if (pidIndex > 0) {
-            pid.remove(pidIndex);
+export const execute = (cp: Cp) => {
+    cp.add("api", "", 0, (isExists, pidKey) => {
+        if (!isExists) {
+            cp.update(pidKey, "");
+
+            ...
+
+            cp.remove(pidKey);
 
             // Action completed.
         } else {
