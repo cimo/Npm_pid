@@ -1,6 +1,6 @@
 {
     "name": "@cimo/pid",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "PID management. Light, fast and secure.",
     "author": "cimo",
     "license": "MIT",
@@ -38,6 +38,8 @@
         "process",
         "nodejs",
         "typescript",
-        "cimo"
+        "cimo",
+        "native",
+        "no dependencies"
     ]
 }
