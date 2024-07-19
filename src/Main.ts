@@ -1,4 +1,4 @@
 import Cp from "./Manager";
 
-export * as CpInterface from "./Interface";
+export * as CpModel from "./Model";
 export { Cp };

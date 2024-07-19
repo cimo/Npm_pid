@@ -1,11 +1,11 @@
 // Source
-import * as Interface from "./Interface";
+import * as Model from "./Model";
 
 export default class Pid {
-    private mainList: Map<number, Interface.Iparameter>;
+    private mainList: Map<number, Model.Iparameter>;
     private timeCheck: number;
 
-    getMainList = () => {
+    getMainList = (): Map<number, Model.Iparameter> => {
         return this.mainList;
     };
 
@@ -16,7 +16,7 @@ export default class Pid {
         this.checkInterval();
     }
 
-    add = (tag: string, data: string, timeLimit: number, callback: Interface.IcallbackAction) => {
+    add = (tag: string, data: string, timeLimit: number, callback: Model.IcallbackAction): void => {
         const checkExists = this.checkExists(tag);
         let key = -1;
 
@@ -29,7 +29,7 @@ export default class Pid {
         callback(checkExists, key);
     };
 
-    update = (key: number, data: string) => {
+    update = (key: number, data: string): void => {
         if (this.mainList.has(key)) {
             const oldParameter = this.mainList.get(key);
 
@@ -44,7 +44,7 @@ export default class Pid {
         }
     };
 
-    checkExists = (tagValue: string) => {
+    checkExists = (tagValue: string): boolean => {
         for (const [, { tag }] of this.mainList) {
             if (tag === tagValue) {
                 return true;
@@ -54,13 +54,13 @@ export default class Pid {
         return false;
     };
 
-    remove = (key: number) => {
+    remove = (key: number): void => {
         if (this.mainList.has(key)) {
             this.mainList.delete(key);
         }
     };
 
-    private checkInterval = () => {
+    private checkInterval = (): void => {
         setInterval(() => {
             const now = Date.now();
 
