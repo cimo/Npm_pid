@@ -1,6 +1,6 @@
 {
     "name": "@cimo/pid",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "PID management. Light, fast and secure.",
     "author": "cimo",
     "license": "MIT",
