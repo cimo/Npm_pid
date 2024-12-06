@@ -1,7 +1,7 @@
 // Source
 import * as Model from "./Model";
 
-export default class Pid {
+export default class Manager {
     private mainList: Map<number, Model.Iparameter>;
     private timeCheck: number;
 

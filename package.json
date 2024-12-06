@@ -1,7 +1,7 @@
 {
     "name": "@cimo/pid",
-    "version": "1.0.6",
-    "description": "PID management. Light, fast and secure.",
+    "version": "1.0.7",
+    "description": "Process id. Light, fast and secure.",
     "author": "cimo",
     "license": "MIT",
     "repository": {
@@ -32,9 +32,6 @@
     "types": "./dist/Main.d.ts",
     "keywords": [
         "PID",
-        "management",
-        "PID management",
-        "action",
         "process",
         "nodejs",
         "typescript",

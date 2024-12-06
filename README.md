@@ -1,6 +1,6 @@
 # Pid
 
-PID management. Light, fast and secure.
+Npm package, process id. Light, fast and secure.
 Writed with native Typescript code and no dependencies are used.
 
 ## Pack
