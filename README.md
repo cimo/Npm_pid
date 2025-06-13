@@ -1,4 +1,4 @@
-# Pid
+# Npm_pid
 
 Npm package, process id. Light, fast and secure.
 Writed with native Typescript code and no dependencies are used.
