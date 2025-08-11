@@ -2,77 +2,75 @@
 import * as Model from "./Model";
 
 export default class Manager {
-    private mainList: Map<number, Model.Iparameter>;
+    private mainObject: Record<number, Model.Iparameter>;
     private timeCheck: number;
 
-    getMainList = (): Map<number, Model.Iparameter> => {
-        return this.mainList;
-    };
-
-    constructor(timeCheck = 25000) {
-        this.mainList = new Map();
-        this.timeCheck = timeCheck;
-
-        this.checkInterval();
-    }
-
-    add = (tag: string, data: string, timeLimit: number, callback: Model.IcallbackAction): void => {
-        const checkExists = this.checkExists(tag);
-        let key = -1;
-
-        if (!checkExists) {
-            key = this.mainList.size + 1;
-
-            this.mainList.set(key, { tag, data, timeLimit, timeCreated: Date.now() });
-        }
-
-        callback(checkExists, key);
-    };
-
-    update = (key: number, data: string): void => {
-        if (this.mainList.has(key)) {
-            const oldParameter = this.mainList.get(key);
-
-            if (oldParameter) {
-                this.mainList.set(key, {
-                    tag: oldParameter.tag,
-                    data,
-                    timeLimit: oldParameter.timeLimit,
-                    timeCreated: oldParameter.timeCreated
-                });
-            }
-        }
-    };
-
-    checkExists = (tagValue: string): boolean => {
-        for (const [, { tag }] of this.mainList) {
-            if (tag === tagValue) {
-                return true;
-            }
-        }
-
-        return false;
-    };
-
-    remove = (key: number): void => {
-        if (this.mainList.has(key)) {
-            this.mainList.delete(key);
-        }
-    };
-
-    private checkInterval = (): void => {
+    private interval = (): void => {
         setInterval(() => {
-            const now = Date.now();
+            const dateNow = Date.now();
 
-            for (const [key, { timeCreated, timeLimit }] of this.mainList) {
-                const difference = now - timeCreated;
+            for (const key in this.mainObject) {
+                const { timeCreated, timeLimit } = this.mainObject[key];
+                const difference = dateNow - timeCreated;
 
                 if (difference > timeLimit && timeLimit > 0) {
-                    this.remove(key);
+                    this.remove(Number(key));
 
                     break;
                 }
             }
         }, this.timeCheck);
+    };
+
+    constructor(timeCheck = 25000) {
+        this.mainObject = {};
+        this.timeCheck = timeCheck;
+
+        this.interval();
+    }
+
+    getMainObject = (): Record<number, Model.Iparameter> => {
+        return this.mainObject;
+    };
+
+    checkRunning = (tagValue: string): boolean => {
+        for (const key in this.mainObject) {
+            if (this.mainObject[key].tag === tagValue) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    add = (tag: string, data: string, timeLimit: number, callback: Model.IcallbackAction): void => {
+        const isRunning = this.checkRunning(tag);
+        let key = -1;
+
+        if (!isRunning) {
+            key = Object.keys(this.mainObject).length + 1;
+
+            this.mainObject[key] = { tag, data, timeLimit, timeCreated: Date.now() };
+        }
+
+        callback(isRunning, key);
+    };
+
+    update = (key: number, data: string): void => {
+        if (this.mainObject[key]) {
+            const object = this.mainObject[key];
+
+            this.mainObject[key] = {
+                tag: object.tag,
+                data,
+                timeLimit: object.timeLimit,
+                timeCreated: object.timeCreated
+            };
+        }
+    };
+
+    remove = (key: number): void => {
+        if (this.mainObject[key]) {
+            delete this.mainObject[key];
+        }
     };
 }

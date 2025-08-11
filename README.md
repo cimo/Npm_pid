@@ -26,7 +26,7 @@ Writed with native Typescript code and no dependencies are used.
 ```
 ...
 
-import { Cp } from "@cimo/pid";
+import { Cp } from "@cimo/pid/dist/src/Main";
 
 // Source
 import * as ControllerTest from "../controller/Test";
@@ -45,13 +45,13 @@ ControllerTest.execute(cp);
 ```
 ...
 
-import { Cp } from "@cimo/cp";
+import { Cp } from "@cimo/pid/dist/src/Main";
 
 ...
 
 export const execute = (cp: Cp) => {
-    cp.add("api", "", 0, (isExists, pidKey) => {
-        if (!isExists) {
+    cp.add("api", "", 0, (pidIsRunning, pidKey) => {
+        if (!pidIsRunning) {
             cp.update(pidKey, "");
 
             ...

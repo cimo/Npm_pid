@@ -6,5 +6,5 @@ export interface Iparameter {
 }
 
 export interface IcallbackAction {
-    (isExists: boolean, pidKey: number);
+    (pidIsRunning: boolean, pidKey: number): void;
 }
