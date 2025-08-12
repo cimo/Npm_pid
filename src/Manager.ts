@@ -22,9 +22,9 @@ export default class Manager {
         }, this.timeCheck);
     };
 
-    constructor(timeCheck = 25000) {
+    constructor(timeCheckValue = 25000) {
         this.mainObject = {};
-        this.timeCheck = timeCheck;
+        this.timeCheck = timeCheckValue;
 
         this.interval();
     }

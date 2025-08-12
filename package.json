@@ -1,12 +1,12 @@
 {
     "name": "@cimo/pid",
-    "version": "1.1.12",
+    "version": "1.1.14",
     "description": "Process id. Light, fast and secure.",
     "author": "cimo",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/cimo/Npm_pid.git"
+        "url": "git+https://github.com/cimo/Npm_pid.git"
     },
     "scripts": {
         "remove_dist": "node -e \"const fs = require('fs'); try{ fs.rmdirSync('./dist/', { recursive: true }) } catch{}; process.exit(0);\"",
