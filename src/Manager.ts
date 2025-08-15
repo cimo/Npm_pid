@@ -1,8 +1,8 @@
 // Source
-import * as Model from "./Model";
+import * as model from "./Model";
 
 export default class Manager {
-    private mainObject: Record<number, Model.Iparameter>;
+    private mainObject: Record<number, model.Iparameter>;
     private timeCheck: number;
 
     private interval = (): void => {
@@ -29,7 +29,7 @@ export default class Manager {
         this.interval();
     }
 
-    getMainObject = (): Record<number, Model.Iparameter> => {
+    getMainObject = (): Record<number, model.Iparameter> => {
         return this.mainObject;
     };
 
@@ -42,7 +42,7 @@ export default class Manager {
         return false;
     };
 
-    add = (tag: string, data: string, timeLimit: number, callback: Model.IcallbackAction): void => {
+    add = (tag: string, data: string, timeLimit: number, callback: model.IcallbackAction): void => {
         const isRunning = this.checkRunning(tag);
         let key = -1;
 
