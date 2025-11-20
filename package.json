@@ -1,6 +1,6 @@
 {
     "name": "@cimo/pid",
-    "version": "1.1.16",
+    "version": "1.1.17",
     "description": "Process id. Light, fast and secure.",
     "author": "cimo",
     "license": "MIT",
