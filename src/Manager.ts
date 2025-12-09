@@ -1,5 +1,5 @@
 // Source
-import * as model from "./Model";
+import * as model from "./Model.js";
 
 export default class Manager {
     private mainObject: Record<number, model.Iparameter>;
