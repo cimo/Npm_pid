@@ -14,7 +14,7 @@ export default class Manager {
                 const difference = dateNow - timeCreated;
 
                 if (difference > timeLimit && timeLimit > 0) {
-                    this.remove(Number(key));
+                    this.delete(Number(key));
 
                     break;
                 }
@@ -68,7 +68,7 @@ export default class Manager {
         }
     };
 
-    remove = (key: number): void => {
+    delete = (key: number): void => {
         if (this.mainObject[key]) {
             delete this.mainObject[key];
         }

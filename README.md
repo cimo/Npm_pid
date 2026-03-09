@@ -56,7 +56,7 @@ export const execute = (cp: Cp) => {
 
             ...
 
-            cp.remove(pidKey);
+            cp.delete(pidKey);
 
             // Action completed.
         } else {
