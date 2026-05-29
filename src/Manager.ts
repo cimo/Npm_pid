@@ -8,8 +8,11 @@ export default class Manager {
     private interval = (): void => {
         setInterval(() => {
             const dateNow = Date.now();
+            const keyList = Object.keys(this.mainObject);
 
-            for (const key in this.mainObject) {
+            for (let a = 0; a < keyList.length; a++) {
+                const key = parseInt(keyList[a]);
+
                 const { timeCreated, timeLimit } = this.mainObject[key];
                 const difference = dateNow - timeCreated;
 
@@ -34,11 +37,16 @@ export default class Manager {
     };
 
     checkRunning = (tagValue: string): boolean => {
-        for (const key in this.mainObject) {
+        const keyList = Object.keys(this.mainObject);
+
+        for (let a = 0; a < keyList.length; a++) {
+            const key = parseInt(keyList[a]);
+
             if (this.mainObject[key].tag === tagValue) {
                 return true;
             }
         }
+
         return false;
     };
 
@@ -47,7 +55,18 @@ export default class Manager {
         let key = -1;
 
         if (!isRunning) {
-            key = Object.keys(this.mainObject).length + 1;
+            const keyList = Object.keys(this.mainObject);
+            let keyMax = 0;
+
+            for (let a = 0; a < keyList.length; a++) {
+                const keyNumber = Number(keyList[a]);
+
+                if (keyNumber > keyMax) {
+                    keyMax = keyNumber;
+                }
+            }
+
+            key = keyMax + 1;
 
             this.mainObject[key] = { tag, data, timeLimit, timeCreated: Date.now() };
         }
