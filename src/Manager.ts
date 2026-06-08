@@ -56,6 +56,7 @@ export default class Manager {
 
         if (!isRunning) {
             const keyList = Object.keys(this.mainObject);
+
             let keyMax = 0;
 
             for (let a = 0; a < keyList.length; a++) {
@@ -76,13 +77,13 @@ export default class Manager {
 
     update = (key: number, data: string): void => {
         if (this.mainObject[key]) {
-            const object = this.mainObject[key];
+            const currentObject = this.mainObject[key];
 
             this.mainObject[key] = {
-                tag: object.tag,
+                tag: currentObject.tag,
                 data,
-                timeLimit: object.timeLimit,
-                timeCreated: object.timeCreated
+                timeLimit: currentObject.timeLimit,
+                timeCreated: currentObject.timeCreated
             };
         }
     };
